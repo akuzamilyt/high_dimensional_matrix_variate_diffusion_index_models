@@ -1,0 +1,111 @@
+﻿# =============================================================================
+# REQUIREMENTS.TXT
+# High-Dimensional Matrix-Variate Diffusion Index Models for Time Series Forecasting
+# 
+# This requirements file specifies the exact dependency versions needed for
+# robust, reproducible implementation of the Ma et al. (2025) framework.
+# All version constraints have been selected to ensure numerical stability,
+# API compatibility, and methodological correctness.
+#
+# Installation: pip install -r requirements.txt
+# 
+# Author: CS Chirinda
+# Version: 1.0.0
+# Compatible with: Python >=3.8,<4.0
+# =============================================================================
+
+# =============================================================================
+# CORE NUMERICAL COMPUTING STACK
+# =============================================================================
+
+# NumPy: Fundamental numerical computing with stable linear algebra operations
+# Version constraint ensures compatibility with einsum operations and advanced indexing
+numpy>=1.21.0,<2.0.0
+
+# Pandas: High-performance data manipulation and time series handling
+# Version ensures compatibility with DatetimeIndex operations and rolling windows
+pandas>=1.4.0,<3.0.0
+
+# SciPy: Scientific computing library for statistical functions and linear algebra
+# Version ensures numerical stability for eigendecomposition and statistical tests
+scipy>=1.8.0,<2.0.0
+
+# =============================================================================
+# STATISTICAL MODELING AND ECONOMETRICS
+# =============================================================================
+
+# Statsmodels: Econometric and statistical modeling
+# Version ensures compatibility with AR models, statistical tests, and time series utilities
+statsmodels>=0.13.0,<1.0.0
+
+# =============================================================================
+# MACHINE LEARNING AND CROSS-VALIDATION
+# =============================================================================
+
+# Scikit-learn: Machine learning algorithms including LassoCV and preprocessing
+# Version ensures stable API for TimeSeriesSplit, StandardScaler, and regularized regression
+scikit-learn>=1.1.0,<2.0.0
+
+# =============================================================================
+# PARALLEL PROCESSING AND PROGRESS MONITORING
+# =============================================================================
+
+# Joblib: Parallel processing and efficient persistence
+# Version ensures compatibility with Parallel/delayed constructs and numpy array serialization
+joblib>=1.1.0,<2.0.0
+
+# TQDM: Progress bars for long-running computational processes
+# Version ensures compatibility with nested progress bars and Jupyter notebooks
+tqdm>=4.62.0,<5.0.0
+
+# =============================================================================
+# VISUALIZATION AND REPORTING
+# =============================================================================
+
+# Matplotlib: Publication-quality plotting and visualization
+# Version ensures compatibility with modern plotting APIs and figure management
+matplotlib>=3.5.0,<4.0.0
+
+# =============================================================================
+# DEVELOPMENT AND TESTING DEPENDENCIES (OPTIONAL)
+# =============================================================================
+
+# Uncomment the following lines for development environment setup:
+#
+# pytest>=7.0.0,<8.0.0              # Testing framework
+# pytest-cov>=4.0.0,<5.0.0          # Coverage reporting
+# black>=22.0.0,<24.0.0              # Code formatting
+# flake8>=4.0.0,<7.0.0               # Linting
+# mypy>=0.950,<2.0.0                 # Static type checking
+# jupyter>=1.0.0,<2.0.0              # Jupyter notebook support
+# seaborn>=0.11.0,<1.0.0             # Enhanced statistical visualization
+
+# =============================================================================
+# PLATFORM-SPECIFIC NOTES
+# =============================================================================
+
+# For Windows users: Ensure Microsoft Visual C++ Build Tools are installed
+# For macOS users: Ensure Xcode Command Line Tools are installed  
+# For optimal performance: Consider using conda-forge channel for numerical libraries
+#
+# Alternative installation via conda:
+# conda install numpy pandas scipy statsmodels scikit-learn matplotlib joblib tqdm -c conda-forge
+
+# =============================================================================
+# VERSION COMPATIBILITY MATRIX
+# =============================================================================
+
+# Python 3.8+: All specified versions compatible
+# Python 3.9+: All specified versions compatible  
+# Python 3.10+: All specified versions compatible
+# Python 3.11+: All specified versions compatible
+# Python 3.12+: Verify numpy and scipy compatibility for latest features
+
+# =============================================================================
+# SECURITY AND MAINTENANCE NOTES
+# =============================================================================
+
+# Last updated: 2025-08-10
+# Security audit: All packages checked against known vulnerabilities
+# Recommended update cycle: Quarterly review of dependency versions
+# Critical path dependencies: numpy, scipy, pandas (monitor for security patches)
